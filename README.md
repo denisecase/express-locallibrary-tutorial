@@ -4,7 +4,7 @@ Building a full-stack web app with Node.js and Express
 
 ## Links
 
-- [Source]()
+- [Source](https://github.com/denisecase/express-locallibrary-tutorial)
 - [Demo]()
 
 ## Based On
