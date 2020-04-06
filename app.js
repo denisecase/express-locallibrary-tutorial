@@ -3,16 +3,22 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const dotenv = require('dotenv')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
 var app = express();
+
+// reads values into process.env
+dotenv.config({ path: '.env' })
 
 // Set up mongoose connection
 const mongoose = require('mongoose')
 //var dev_db_url = 'mongodb+srv://cooluser:coolpassword@cluster0-mbdj7.mongodb.net/local_library?retryWrites=true'
-const dev_db_url = 'mongodb+srv://dbUser:coolpassword@cluster0-elcct.mongodb.net/local_library?retryWrites=true&w=majority'
+const dev_db_url = process.env.ATLAS_URI
+
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
@@ -34,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog', catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
